@@ -5,4 +5,5 @@
 File name = "index.html" Title = "Home"
 File name = "about.html" Title = "About"
 File name = "time.html" Title = "Time"
+File name = "note.html" Title = "Note From Owner"
 File name = "shutdown.html" Title = "Donate/Support"
