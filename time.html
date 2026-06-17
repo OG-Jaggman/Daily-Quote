@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>E.S.T. Time | Daily Quote</title>
+  <title>Server Time (E.S.T.) | Daily Quote</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -37,23 +37,23 @@
 
     <section class="hero">
       <article class="card quote-card">
-        <span class="eyebrow">E.S.T. Time</span>
-        <h1>Eastern Time</h1>
-        <div id="estTime" class="quote">Loading...</div>
-        <div id="estDate" class="meta">Loading date...</div>
+        <span class="eyebrow">Server Time (E.S.T.)</span>
+        <h1>Current Server Time (E.S.T.)</h1>
+        <div id="serverTime" class="quote">Loading...</div>
+        <div id="serverDate" class="meta">Loading date...</div>
       </article>
 
       <aside class="card logo-panel">
         <img src="/logo.png" alt="daily-quote.today logo">
-        <p>This page only shows the current Eastern Time.</p>
+        <p>This page only shows the current Server Time (E.S.T.).</p>
       </aside>
     </section>
 
-    <p class="footer">daily-quote.today E.S.T. time page.</p>
+    <p class="footer">daily-quote.today Server Time page.</p>
   </main>
 
   <script>
-    function updateEasternTime() {
+    function updateServerTime() {
       const now = new Date();
 
       const timeText = new Intl.DateTimeFormat([], {
