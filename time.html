@@ -1,11 +1,24 @@
-<!DOCTYPE html><html lang="en"><head><title>Time | Daily Quote</title><meta charset="UTF-8">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>E.S.T. Time | Daily Quote</title>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <script src="/theme.js"></script>
-  <link rel="stylesheet" href="/style.css"></head><body><main class="page-shell"><div class="announcement-bar" role="status"><span>This website may permanently shut down on January 1, 2027 at 12:30 P.M. EST.</span><a href="/shutdown.html">Learn more</a></div><header class="topbar">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main class="page-shell">
+    <div class="announcement-bar" role="status">
+      <span>This website may permanently shut down on January 1, 2027 at 12:30 P.M. EST.</span>
+      <a href="/shutdown.html">Learn more</a>
+    </div>
+
+    <header class="topbar">
       <a class="brand" href="/">
         <img src="/logo.png" alt="daily-quote.today logo">
         <span class="brand-text">
@@ -18,6 +31,53 @@
         <a class="secondary" href="/about.html">About</a>
         <a class="secondary" href="/time.html">Time</a>
         <a href="/shutdown.html">Donate</a>
-        <button class="theme-toggle" id="themeToggle" type="button"  data-theme-toggle>Dark Mode</button>
+        <button class="theme-toggle" id="themeToggle" type="button" data-theme-toggle>Dark Mode</button>
       </nav>
-    </header><section class="hero"><article class="card quote-card"><span class="eyebrow">Live clock</span><h1>Current Time</h1><div id="timeNow" class="quote">Loading...</div><div id="dateNow" class="meta">Loading date...</div></article><aside class="card logo-panel"><img src="/logo.png" alt="daily-quote.today logo"><p>A simple live clock for anyone stopping by the site.</p></aside></section><p class="footer">daily-quote.today time page.</p></main><script src="/app.js"></script></body></html>
+    </header>
+
+    <section class="hero">
+      <article class="card quote-card">
+        <span class="eyebrow">E.S.T. Time</span>
+        <h1>Eastern Time</h1>
+        <div id="estTime" class="quote">Loading...</div>
+        <div id="estDate" class="meta">Loading date...</div>
+      </article>
+
+      <aside class="card logo-panel">
+        <img src="/logo.png" alt="daily-quote.today logo">
+        <p>This page only shows the current Eastern Time.</p>
+      </aside>
+    </section>
+
+    <p class="footer">daily-quote.today E.S.T. time page.</p>
+  </main>
+
+  <script>
+    function updateEasternTime() {
+      const now = new Date();
+
+      const timeText = new Intl.DateTimeFormat([], {
+        timeZone: "America/New_York",
+        hour: "numeric",
+        minute: "2-digit",
+        second: "2-digit",
+        timeZoneName: "short"
+      }).format(now);
+
+      const dateText = new Intl.DateTimeFormat([], {
+        timeZone: "America/New_York",
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      }).format(now);
+
+      document.getElementById("estTime").textContent = timeText;
+      document.getElementById("estDate").textContent = dateText;
+    }
+
+    updateEasternTime();
+    setInterval(updateEasternTime, 1000);
+  </script>
+</body>
+</html>
