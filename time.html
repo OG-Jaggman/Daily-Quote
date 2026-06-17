@@ -72,12 +72,12 @@
         day: "numeric"
       }).format(now);
 
-      document.getElementById("estTime").textContent = timeText;
-      document.getElementById("estDate").textContent = dateText;
+      document.getElementById("serverTime").textContent = timeText;
+      document.getElementById("serverDate").textContent = dateText;
     }
 
-    updateEasternTime();
-    setInterval(updateEasternTime, 1000);
+    updateServerTime();
+    setInterval(updateServerTime, 1000);
   </script>
 </body>
 </html>
