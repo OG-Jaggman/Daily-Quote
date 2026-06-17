@@ -24,9 +24,41 @@
     return fileName.replace(/^\/+/, "");
   }
 
+  function pageIdFromPath(path) {
+    var cleanPath = path.split("?")[0].split("#")[0].replace(/\/+$/, "");
+    var fileName = cleanPath.split("/").pop() || "index.html";
+
+    fileName = decodeURIComponent(fileName);
+    fileName = fileName.replace(/\.html$/i, "");
+
+    return fileName === "index" ? "home" : fileName;
+  }
+
+  function pageIdFromFileName(fileName) {
+    return pageIdFromPath(normalizeFileName(fileName));
+  }
+
   function pageHref(fileName) {
     fileName = normalizeFileName(fileName);
-    return fileName === "index.html" ? "/" : "/" + fileName;
+    return sitePrefix() + (fileName === "index.html" ? "" : fileName);
+  }
+
+  function sitePrefix() {
+    var path = window.location.pathname;
+    var publicIndex = path.toLowerCase().indexOf("/public/");
+
+    return publicIndex === -1 ? "/" : path.slice(0, publicIndex + 8);
+  }
+
+  function fetchPagesFile() {
+    return fetch("/Pages.txt", { cache: "no-store" })
+      .then(function (response) {
+        if (response.ok) return response;
+        return fetch("Pages.txt", { cache: "no-store" });
+      })
+      .catch(function () {
+        return fetch("Pages.txt", { cache: "no-store" });
+      });
   }
 
   function currentFileName() {
@@ -36,19 +68,21 @@
     return decodeURIComponent(fileName) || "index.html";
   }
 
-  function linkFileName(link) {
-    var pathname = new URL(link.getAttribute("href"), window.location.href).pathname.replace(/\/+$/, "");
-    var fileName = pathname.split("/").pop() || "index.html";
+  function currentPageId() {
+    return pageIdFromPath(window.location.pathname);
+  }
 
-    return decodeURIComponent(fileName) || "index.html";
+  function linkPageId(link) {
+    var pathname = new URL(link.getAttribute("href"), window.location.href).pathname.replace(/\/+$/, "");
+    return pageIdFromPath(pathname);
   }
 
   function markCurrentNavigation() {
-    var current = currentFileName();
+    var current = currentPageId();
 
     document.querySelectorAll("[data-pages-nav]").forEach(function (nav) {
       nav.querySelectorAll("a").forEach(function (link) {
-        var isCurrent = linkFileName(link) === current;
+        var isCurrent = linkPageId(link) === current;
 
         link.classList.toggle("active", isCurrent);
 
@@ -67,7 +101,7 @@
 
   function renderNavigation(pages) {
     var navs = document.querySelectorAll("[data-pages-nav]");
-    var current = currentFileName();
+    var current = currentPageId();
 
     navs.forEach(function (nav) {
       var themeButton = nav.querySelector("[data-theme-toggle], #themeToggle");
@@ -86,7 +120,7 @@
         link.textContent = page.title;
 
         if (shouldUseSecondaryStyle(normalizedFileName)) classes.push("secondary");
-        if (normalizedFileName === current) {
+        if (pageIdFromFileName(normalizedFileName) === current) {
           classes.push("active");
           link.setAttribute("aria-current", "page");
         }
@@ -102,7 +136,7 @@
   document.addEventListener("DOMContentLoaded", function () {
     markCurrentNavigation();
 
-    fetch("/Pages.txt", { cache: "no-store" })
+    fetchPagesFile()
       .then(function (response) {
         if (!response.ok) throw new Error("Could not load Pages.txt");
         return response.text();
