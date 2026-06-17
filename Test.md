@@ -1,0 +1,1 @@
+Hello, this is just a test to make sure that the synchronization works for this GitHub & Cloudflare Pages work.
