@@ -39,11 +39,26 @@ $watcher.IncludeSubdirectories = $false
 $watcher.EnableRaisingEvents = $true
 
 $action = {
-  Format-Page $Event.SourceEventArgs.FullPath
+  $path = $Event.SourceEventArgs.FullPath
+  if (-not $path.EndsWith(".html", [System.StringComparison]::OrdinalIgnoreCase)) { return }
+  if (-not (Test-Path -LiteralPath $path)) { return }
+
+  Start-Sleep -Milliseconds 500
+
+  $content = Get-Content -LiteralPath $path -Raw -ErrorAction SilentlyContinue
+  if ($content -match "data-site-page" -or $content -match "data-pages-nav") { return }
+
+  $fileName = [System.IO.Path]::GetFileName($path)
+  & $Event.MessageData.Formatter -FileName $fileName
 }
 
-$created = Register-ObjectEvent -InputObject $watcher -EventName Created -Action $action
-$renamed = Register-ObjectEvent -InputObject $watcher -EventName Renamed -Action $action
+$messageData = @{
+  Formatter = $formatter
+}
+
+$created = Register-ObjectEvent -InputObject $watcher -EventName Created -Action $action -MessageData $messageData
+$changed = Register-ObjectEvent -InputObject $watcher -EventName Changed -Action $action -MessageData $messageData
+$renamed = Register-ObjectEvent -InputObject $watcher -EventName Renamed -Action $action -MessageData $messageData
 
 Write-Host "Watching public folder for new .html files."
 Write-Host "Press Ctrl+C to stop."
@@ -55,6 +70,7 @@ try {
 }
 finally {
   Unregister-Event -SubscriptionId $created.Id -ErrorAction SilentlyContinue
+  Unregister-Event -SubscriptionId $changed.Id -ErrorAction SilentlyContinue
   Unregister-Event -SubscriptionId $renamed.Id -ErrorAction SilentlyContinue
   $watcher.Dispose()
 }

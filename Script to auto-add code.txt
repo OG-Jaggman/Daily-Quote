@@ -1,0 +1,3 @@
+.\tools\Watch-PublicPages.ps1
+
+.\tools\Format-PublicPage.ps1 -FileName "secret2.html" -Title "Secret 2" -SkipNavigation
