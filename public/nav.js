@@ -20,13 +20,37 @@
       .filter(Boolean);
   }
 
+  function normalizeFileName(fileName) {
+    return fileName.replace(/^\/+/, "");
+  }
+
   function pageHref(fileName) {
-    return fileName === "index.html" ? "/" : "/" + fileName.replace(/^\/+/, "");
+    fileName = normalizeFileName(fileName);
+    return fileName === "index.html" ? "/" : "/" + fileName;
   }
 
   function currentFileName() {
-    var path = window.location.pathname.replace(/^\/+/, "");
-    return path === "" ? "index.html" : path;
+    var path = window.location.pathname.replace(/\/+$/, "");
+    var fileName = path.split("/").pop() || "index.html";
+
+    return decodeURIComponent(fileName) || "index.html";
+  }
+
+  function linkFileName(link) {
+    var pathname = new URL(link.getAttribute("href"), window.location.href).pathname.replace(/\/+$/, "");
+    var fileName = pathname.split("/").pop() || "index.html";
+
+    return decodeURIComponent(fileName) || "index.html";
+  }
+
+  function markCurrentNavigation() {
+    var current = currentFileName();
+
+    document.querySelectorAll("[data-pages-nav]").forEach(function (nav) {
+      nav.querySelectorAll("a").forEach(function (link) {
+        link.classList.toggle("active", linkFileName(link) === current);
+      });
+    });
   }
 
   function shouldUseSecondaryStyle(fileName) {
@@ -48,11 +72,13 @@
         var link = document.createElement("a");
         var classes = [];
 
-        link.href = pageHref(page.fileName);
+        var normalizedFileName = normalizeFileName(page.fileName);
+
+        link.href = pageHref(normalizedFileName);
         link.textContent = page.title;
 
-        if (shouldUseSecondaryStyle(page.fileName)) classes.push("secondary");
-        if (page.fileName === current) classes.push("active");
+        if (shouldUseSecondaryStyle(normalizedFileName)) classes.push("secondary");
+        if (normalizedFileName === current) classes.push("active");
         if (classes.length) link.className = classes.join(" ");
 
         nav.insertBefore(link, themeButton || null);
@@ -61,6 +87,8 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
+    markCurrentNavigation();
+
     fetch("/Pages.txt", { cache: "no-store" })
       .then(function (response) {
         if (!response.ok) throw new Error("Could not load Pages.txt");
@@ -71,7 +99,7 @@
         if (pages.length) renderNavigation(pages);
       })
       .catch(function () {
-        // Keep the hardcoded fallback navigation if Pages.txt cannot load.
+        markCurrentNavigation();
       });
   });
 })();
