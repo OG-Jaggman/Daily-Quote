@@ -9,6 +9,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <script src="/theme.js"></script>
+  <script src="/nav.js"></script>
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
@@ -26,11 +27,11 @@
           <span>A fresh quote every day</span>
         </span>
       </a>
-      <nav class="nav" aria-label="Main navigation">
+      <nav class="nav" aria-label="Main navigation" data-pages-nav>
         <a href="/">Home</a>
         <a class="secondary" href="/about.html">About</a>
-        <a class="secondary" href="/time.html">Time</a>
-        <a href="/shutdown.html">Donate</a>
+        <a class="secondary active" href="/time.html">Time</a>
+        <a href="/shutdown.html">Donate/Support</a>
         <button class="theme-toggle" id="themeToggle" type="button" data-theme-toggle>Dark Mode</button>
       </nav>
     </header>

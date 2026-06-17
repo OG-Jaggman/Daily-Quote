@@ -1,0 +1,8 @@
+# Each line below adds one page to the navigation bar.
+# Format:
+# File name = "something.html" Title = "Something"
+
+File name = "index.html" Title = "Home"
+File name = "about.html" Title = "About"
+File name = "time.html" Title = "Time"
+File name = "shutdown.html" Title = "Donate/Support"
