@@ -53,31 +53,52 @@
   </main>
 
   <script>
-    function updateServerTime() {
-      const now = new Date();
+    (function () {
+      function getTimeElement() {
+        return document.getElementById("serverTime") || document.getElementById("estTime");
+      }
 
-      const timeText = new Intl.DateTimeFormat([], {
-        timeZone: "America/New_York",
-        hour: "numeric",
-        minute: "2-digit",
-        second: "2-digit",
-        timeZoneName: "short"
-      }).format(now);
+      function getDateElement() {
+        return document.getElementById("serverDate") || document.getElementById("estDate");
+      }
 
-      const dateText = new Intl.DateTimeFormat([], {
-        timeZone: "America/New_York",
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric"
-      }).format(now);
+      function updateServerTime() {
+        var timeElement = getTimeElement();
+        var dateElement = getDateElement();
 
-      document.getElementById("serverTime").textContent = timeText;
-      document.getElementById("serverDate").textContent = dateText;
-    }
+        if (!timeElement || !dateElement) return;
 
-    updateServerTime();
-    setInterval(updateServerTime, 1000);
+        try {
+          var now = new Date();
+          var timeText = new Intl.DateTimeFormat("en-US", {
+            timeZone: "America/New_York",
+            hour: "numeric",
+            minute: "2-digit",
+            second: "2-digit",
+            timeZoneName: "short"
+          }).format(now);
+
+          var dateText = new Intl.DateTimeFormat("en-US", {
+            timeZone: "America/New_York",
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric"
+          }).format(now);
+
+          timeElement.textContent = timeText;
+          dateElement.textContent = dateText;
+        } catch (error) {
+          timeElement.textContent = "Could not load time.";
+          dateElement.textContent = "Please refresh the page.";
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        updateServerTime();
+        setInterval(updateServerTime, 1000);
+      });
+    })();
   </script>
 </body>
 </html>
