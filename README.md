@@ -53,6 +53,20 @@ File name = "example.html" Title = "Example"
 
 To create a page without adding it to the navigation bar, add `-SkipNavigation`.
 
+If you already created a plain `.html` file in `public/`, format it with:
+
+```powershell
+.\tools\Format-PublicPage.ps1 -FileName "note.html"
+```
+
+To automatically format new `.html` files while you work, keep this watcher running:
+
+```powershell
+.\tools\Watch-PublicPages.ps1
+```
+
+When the watcher sees a new `.html` file in `public/`, it adds the shared layout and navigation setup, then adds the page to `public/Pages.txt`.
+
 
 ## Dark / Light Mode
 
