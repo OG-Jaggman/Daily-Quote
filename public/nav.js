@@ -48,7 +48,15 @@
 
     document.querySelectorAll("[data-pages-nav]").forEach(function (nav) {
       nav.querySelectorAll("a").forEach(function (link) {
-        link.classList.toggle("active", linkFileName(link) === current);
+        var isCurrent = linkFileName(link) === current;
+
+        link.classList.toggle("active", isCurrent);
+
+        if (isCurrent) {
+          link.setAttribute("aria-current", "page");
+        } else {
+          link.removeAttribute("aria-current");
+        }
       });
     });
   }
@@ -78,11 +86,16 @@
         link.textContent = page.title;
 
         if (shouldUseSecondaryStyle(normalizedFileName)) classes.push("secondary");
-        if (normalizedFileName === current) classes.push("active");
+        if (normalizedFileName === current) {
+          classes.push("active");
+          link.setAttribute("aria-current", "page");
+        }
         if (classes.length) link.className = classes.join(" ");
 
         nav.insertBefore(link, themeButton || null);
       });
+
+      markCurrentNavigation();
     });
   }
 
