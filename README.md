@@ -18,9 +18,7 @@ Includes:
 
 Not included:
 - Node.js server files
-- Raspberry Pi scripts
-- GPIO code
-- Fire alarm/breaker panel code
+- Raspberry Pi/server scripts
 - AI tools/admin links
 
 Edit quotes in `public/quotes.json`. The website picks one quote each day based on the date.
