@@ -15,6 +15,7 @@ Includes:
 - `public/app.js`
 - `public/style.css`
 - logo and favicon files in `public/`
+- And many more files!
 
 Not included:
 - Node.js server files
