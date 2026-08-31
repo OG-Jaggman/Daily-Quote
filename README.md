@@ -13,4 +13,4 @@ The browser remembers the user's choice with localStorage.
 
 ## Notes
 
-This project will be abandoned and removed on January 1st of 2027 due to funding issues. If you would like to support this project to keep it up, please visit https://daily-quote.today/shutdown
+This project will be abandoned and removed on January 1st of 2027 due to funding issues. If you would like to support this project to keep it up, please visit "https://daily-quote.today/shutdown".
