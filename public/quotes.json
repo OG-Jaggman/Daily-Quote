@@ -55,6 +55,14 @@
     {
       "quote": "This is my pet duck Adam going for his first swim. Be careful, Adam",
       "author": "Adam's Owner"
+    },
+    {
+      "quote": "This is my pet duck Adam going for is first swim",
+      "author": "Adams Owner"
+    },
+    {
+      "quote": "\"Nothing is impossible, for the word impossible is I'm Possible\"",
+      "author": "Audrey Hepburn"
     }
   ]
 }
