@@ -1,6 +1,7 @@
-# Daily Quote — Cloudflare Pages Static Version
+# Daily Quote
 
-The full website runs both off of  both this repository and Cloudflare Pages, because I used run it off of my own server, but it wasn't powerfull enough and a better one is expensive.
+The full website runs both off of  both this repository and Cloudflare Pages. The full website can be found on [here](https://daily-quote.today).
+
 
 ## Quote Picking Info
 
