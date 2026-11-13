@@ -4,7 +4,7 @@ The full website runs both off of  both this repository and Cloudflare Pages, be
 
 ## Quote Picking Info
 
-The website picks one quote each day based on the date.
+The website picks one random submitted quote each day.
 
 ## Dark / Light Mode
 
