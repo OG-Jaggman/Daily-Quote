@@ -1,6 +1,6 @@
 # Daily Quote
 
-The full website runs both off of  both this repository and Cloudflare Pages. The full website can be found on [here](https://daily-quote.today).
+The full website runs both off of  both this repository and Cloudflare Pages. The full website can be found [here](https://daily-quote.today).
 
 
 ## Quote Picking Info
